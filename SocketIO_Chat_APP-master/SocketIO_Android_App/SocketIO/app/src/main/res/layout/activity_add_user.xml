@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/userimage"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddUserActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="98dp"
+        android:layout_marginEnd="97dp"
+        android:layout_marginBottom="477dp"
+        android:text="Welcome"
+        android:textAlignment="center"
+        android:textColor="#FFF"
+        android:textSize="32dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/userNickName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:hint="Add Nickname"
+        android:textColor="#fff"
+        android:textColorHint="#66FFFFFF"
+        android:textAlignment="center"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/setNickName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="#fff"
+        android:text="Continue..."
+        android:textStyle="bold"
+        android:enabled="false"
+        android:background="#0c2f39"
+        android:layout_below="@+id/userNickName"
+        android:layout_centerHorizontal="true"/>
+
+
+
+</RelativeLayout>
