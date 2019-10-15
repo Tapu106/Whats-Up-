@@ -1,7 +1,11 @@
 package com.id.socketio;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +29,7 @@ import com.github.nkzawa.emitter.Emitter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,6 +40,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
 
 
 
@@ -132,7 +141,35 @@ public class MainActivity extends AppCompatActivity {
         messageAdapter = new MessageAdapter(this, R.layout.item_message, messageFormatList);
         messageListView.setAdapter(messageAdapter);
 
+        verifyStoragePermissions();
+        verifyDataFolder();
         onTypeButtonEnable();
+    }
+
+    public void verifyStoragePermissions() {
+        // Check if we have write permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                requestPermissions(
+                        PERMISSIONS_STORAGE,
+                        REQUEST_EXTERNAL_STORAGE
+                );
+            }
+        }
+    }
+    private void verifyDataFolder() {
+        File folder = new File(Environment.getExternalStorageDirectory() + "/Client To Server");
+        File folder1 = new File(folder.getPath() + "/Conversations");
+        File folder2 = new File(folder.getPath() + "/Saved txt files");
+        if(!folder.exists() || !folder.isDirectory()) {
+            folder.mkdir();
+            folder1.mkdir();
+            folder2.mkdir();
+        }
+        else if(!folder1.exists())
+            folder1.mkdir();
+        else if(!folder2.exists())
+            folder2.mkdir();
     }
 
     @Override
@@ -324,36 +361,63 @@ public class MainActivity extends AppCompatActivity {
 
     public void send(View view)
     {
-        FileOutputStream fos = null;
+//        FileOutputStream fos = null;
+//        String newline = "\n";
+//        try {
+//
+//            fos =openFileOutput(FILE_NAME, MODE_PRIVATE);
+//            // PrintWriter pw = new PrintWriter(fos);
+//
+//            for(int i=0; i<marray.size(); i++){
+//                // pw.write("It is here");
+//                String l = marray.get(i).getUniqueId().concat(" : ");
+//                fos.write(l.getBytes());
+//                fos.write(marray.get(i).getUsername().getBytes());
+//                fos.write(newline.getBytes());
+//                fos.write(marray.get(i).getMessage().getBytes());
+//                fos.write(newline.getBytes());
+//                Log.d(TAG, marray.get(i).getUsername() + " : " + marray.get(i).getMessage() + "\n");}
+//
+//            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (fos != null) {
+//                try {
+//                    fos.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+
+        String path = Environment.getExternalStorageDirectory().toString();
+        File file = null;
         String newline = "\n";
+
+        file = new File(path + "/Client To Server/Saved txt files", FILE_NAME);
+
+        FileOutputStream stream;
+        Toast.makeText(this, "Saved in SaveChat.txt", Toast.LENGTH_SHORT).show();
+
         try {
-
-            fos =openFileOutput(FILE_NAME, MODE_PRIVATE);
-            // PrintWriter pw = new PrintWriter(fos);
-
-            for(int i=0; i<marray.size(); i++){
+            stream = new FileOutputStream(file, false);
+            for (int i = 0; i < marray.size(); i++) {
                 // pw.write("It is here");
                 String l = marray.get(i).getUniqueId().concat(" : ");
-                fos.write(l.getBytes());
-                fos.write(marray.get(i).getUsername().getBytes());
-                fos.write(newline.getBytes());
-                fos.write(marray.get(i).getMessage().getBytes());
-                fos.write(newline.getBytes());
-                Log.d(TAG, marray.get(i).getUsername() + " : " + marray.get(i).getMessage() + "\n");}
-
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
+                stream.write(l.getBytes());
+                stream.write(marray.get(i).getUsername().getBytes());
+                stream.write(newline.getBytes());
+                stream.write(marray.get(i).getMessage().getBytes());
+                stream.write(newline.getBytes());
+                Log.d(TAG, marray.get(i).getUsername() + " : " + marray.get(i).getMessage() + "\n"); }
+            stream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
