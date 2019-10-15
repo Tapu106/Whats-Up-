@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageAdapter extends ArrayAdapter<MessageFormat> {
+
+    private static final String TAG = "Tapu";
     public MessageAdapter(Context context, int resource, List<MessageFormat> objects) {
         super(context, resource, objects);
     }
@@ -67,6 +69,12 @@ public class MessageAdapter extends ArrayAdapter<MessageFormat> {
 
             messageText.setText(message.getMessage());
             usernameText.setText(message.getUsername());
+
+            MainActivity.marray.add(new MessageFormat(message.getUniqueId(), message.getUsername() ,message.getMessage()));
+
+
+            Log.d(TAG, message.getMessage());
+
         }
 
         return convertView;

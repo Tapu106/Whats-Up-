@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static final String FILE_NAME="SaveChat.txt";
-    ArrayList<MessageFormat>marray = new ArrayList<>();
+   static ArrayList<MessageFormat>marray = new ArrayList<>();
 
     private EditText textField;
     private ImageButton sendButton;
