@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#00352d</color>
     <color name="colorAccent">#00352d</color>
     <color name="typing">#00352d</color>
+
+
+    <color name="colorPrimarySplash">#00C853</color>
+    <color name="colorPrimaryDarkSplash">#00993F</color>
+    <color name="colorAccentSplash">#E65100</color>
 </resources>

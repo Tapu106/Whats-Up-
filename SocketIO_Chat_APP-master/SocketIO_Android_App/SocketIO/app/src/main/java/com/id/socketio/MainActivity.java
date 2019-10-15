@@ -1,6 +1,7 @@
 package com.id.socketio;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     private static final String FILE_NAME="SaveChat.txt";
     ArrayList<MessageFormat>marray = new ArrayList<>();
@@ -85,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         Username = getIntent().getStringExtra("username");
 
